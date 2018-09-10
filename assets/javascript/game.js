@@ -1,28 +1,10 @@
-var letterClassName = "letter";
-var spaceClassName = "space";
-
 var hangman = {
     wins: 0,
     losses: 0,
-    guesses: 10,
+    guessesLeft: 10,
     wrongLettersGuessed: [],
     wordToGuess: "",
     wordsPlayed: [],
-    marvelWords: [
-        "Inifinity Stones", "Iron Man", "Thor",
-        "Jarvis",
-        "Wakanda",
-        "Vibranium",
-        "Black Panther",
-        "TChalla",
-        "Killmonger",
-        "Captain America",
-        "Winter Soldier",
-        "Shield",
-        "Black Widow",
-        "Spiderman",
-        "Doctor Strange"
-    ],
 
     startGame: function() {
         // Pick a word for the player to guess.
@@ -30,39 +12,41 @@ var hangman = {
         this.moveWordToWordsPlayedBucket(this.wordToGuess);
 
         // Regenerate html for word to guess.
-        $(".word-to-guess").html(hangman.generateHTMLFromWordToGuess());
+        $(".word-to-guess").html(hangman.generateHTML(this.wordToGuess, letterClassName, true));
         console.log(this.wordToGuess);
         
-        // Reset key properties
-        this.guesses = 10;
+        // Reset key functionality.
+        this.guessesLeft = 10;
         this.wrongLettersGuessed = [];
+        $("#counter").text(this.guessesLeft);
+        $(".wrong-letters").html('');
     },
 
     setRandomWordToGuess: function() {
-        var randomIndex = Math.floor(Math.random() * this.marvelWords.length);
-        this.wordToGuess = this.marvelWords[randomIndex];
+        var randomIndex = Math.floor(Math.random() * marvelWords.length);
+        this.wordToGuess = marvelWords[randomIndex];
     },
 
     moveWordToWordsPlayedBucket: function(word){
         // This method moves a word from the marvel words
         // bucket to the words played bucket to ensure they
         // don't get repeated during the game.
-        var wordIndex = this.marvelWords.indexOf(word);
+        var wordIndex = marvelWords.indexOf(word);
         if (wordIndex > -1){
-            this.marvelWords.splice(wordIndex, 1);
+            marvelWords.splice(wordIndex, 1);
             this.wordsPlayed.push(word);
         }
     },
 
-    generateHTMLFromWordToGuess: function(){
+    generateHTML: function(content, className, hideContent){
         var html = "";
 
-        for (var i = 0; i < this.wordToGuess.length; i++){
-            if (this.wordToGuess[i] === ' '){
+        for (var i = 0; i < content.length; i++){
+            if (content[i] === ' '){
                 html += "<span class=" + spaceClassName  + "></span>";
             }
             else{
-                html += "<p class=" + letterClassName + ">__</p>";
+                html += "<p class=" + className + ">" + (hideContent ? "__" : content[i]) + "</p>";
             }
         }
         return html;
@@ -75,7 +59,6 @@ var hangman = {
 
         // Ensure you haven't already guessed that letter
         if (this.wrongLettersGuessed.includes(letter)){
-            console.log("You already guessed that letter");
             return;
         }
 
@@ -85,8 +68,9 @@ var hangman = {
         }
         else{
             this.wrongLettersGuessed.push(letter);
-            this.guesses--;
-            console.log(this.wrongLettersGuessed);
+            this.guessesLeft--;
+            $("#counter").text(this.guessesLeft);
+            $(".wrong-letters").html(this.generateHTML(this.wrongLettersGuessed, wrongLetterClassName, false))
         }
 
         this.evaluateStateOfGame();
@@ -112,18 +96,9 @@ var hangman = {
             this.wins++;
             this.startGame();            
         }
-        else if (this.guesses === 0){
+        else if (this.guessesLeft === 0){
             this.losses++;
             this.startGame();
         }
     }
-}
-
-hangman.startGame();
-
-document.onkeyup = function (event) {
-    // Ensure valid letter is presssed (Only letters contain 'Key' in their code).
-    if (event.code.includes("Key")){
-        hangman.checkLetter(event.key);
-    }    
 }

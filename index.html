@@ -14,23 +14,28 @@
 </head>
 <body>
     <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-3">MARVEL HANGMAN</h1>
+            <hr class="my-4" style="color:white">
+            <p class="lead">This is a hangman game with Marvel characters</p>
+            <p>Press any key to get started!</p>
+        </div>
         <div class="row">
-            <div class="col-sm-6">
-                <div class="wins">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="losses">                    
-                </div>
-            </div>
+            <p id="counter">10</p>
         </div>
         <div class="row">        
             <div class="word-to-guess">
             </div>            
         </div>
+        <div class="row">
+            <div class="wrong-letters">
+            </div>            
+        </div>
     </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="assets/javascript/globals.js"></script>
     <script src="assets/javascript/game.js"></script>
+    <script src="assets/javascript/run.js"></script>
 </body>
 </html>
