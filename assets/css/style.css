@@ -1,0 +1,11 @@
+.word-to-guess {
+    display: flex;
+}
+
+.word-to-guess > * {
+    padding: 5px;
+}
+
+.space {
+    width: 20px;
+}
