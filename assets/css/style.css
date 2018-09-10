@@ -1,11 +1,40 @@
-.word-to-guess {
-    display: flex;
+body {
+    background-image: url(../images/avengers-background.jpg);
+    background-size: 100% auto;
+    color: white;
 }
 
-.word-to-guess > * {
+hr {
+    border-color: white;
+}
+
+.jumbotron {
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    padding-bottom: 1px;
+}
+
+.word-to-guess, .wrong-letters {
+    display: flex;
+    margin: 15px auto 0;
+    background: rgba(255, 255, 255, .5);
+    border-radius: 15px;
+}
+
+.word-to-guess>*, .wrong-letters>* {
     padding: 5px;
+    font-size: 24pt;
+    margin-bottom: 0px;
 }
 
 .space {
-    width: 20px;
+    width: 25px;
+}
+
+#counter {
+    margin: auto;
+    padding: 10px 20px;
+    border: solid white;
+    border-radius: 15px;
+    font-size: 20pt;
 }
