@@ -16,6 +16,7 @@ hr {
 
 .word-to-guess, .wrong-letters {
     display: flex;
+    flex-wrap: wrap;
     margin: 15px auto 0;
     background: rgba(255, 255, 255, .5);
     border-radius: 15px;
@@ -37,4 +38,14 @@ hr {
     border: solid white;
     border-radius: 15px;
     font-size: 20pt;
+}
+
+@media screen and (max-width:400px){
+    .display-3{
+        font-size: 18pt;
+    }
+
+    .word-to-guess>*, .wrong-letters>*{
+        font-size: 18pt;
+    }
 }
