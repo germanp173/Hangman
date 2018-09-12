@@ -2,30 +2,57 @@ body {
     background-image: url(../images/avengers-background.jpg);
     background-size: 100% auto;
     color: white;
+    text-align: center;
 }
 
 hr {
     border-color: white;
 }
 
+p {
+    margin-bottom: 0;
+}
+
 .jumbotron {
     background-color: rgba(0, 0, 0, 0);
-    text-align: center;
-    padding-bottom: 1px;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+.row {
+    min-height: 75px;
+}
+
+.word-to-guess,
+.wrong-letters,
+.game-score,
+.game-results,
+.game-words-played {
+    background: rgba(255, 255, 255, .5);
+    border-radius: 15px;
 }
 
 .word-to-guess, .wrong-letters {
     display: flex;
     flex-wrap: wrap;
-    margin: 15px auto 0;
-    background: rgba(255, 255, 255, .5);
-    border-radius: 15px;
+    margin: 15px auto 0;    
 }
 
 .word-to-guess>*, .wrong-letters>* {
     padding: 5px;
     font-size: 24pt;
     margin-bottom: 0px;
+}
+
+.game-score,
+.game-results,
+.game-words-played {
+    padding: 20px;
+}
+
+.words-played-list {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .space {
@@ -40,10 +67,19 @@ hr {
     font-size: 20pt;
 }
 
+#game-details-row {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
 @media screen and (max-width:400px){
+    .row {
+        min-height: 65px;
+    }
+    
     .display-3{
         font-size: 18pt;
-    }
+    }    
 
     .word-to-guess>*, .wrong-letters>*{
         font-size: 18pt;

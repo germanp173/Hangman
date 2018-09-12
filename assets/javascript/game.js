@@ -5,6 +5,7 @@ var hangman = {
     wrongLettersGuessed: [],
     wordToGuess: "",
     wordsPlayed: [],
+    gameStopped: false,
 
     startGame: function() {
         // Pick a word for the player to guess.
@@ -13,7 +14,6 @@ var hangman = {
 
         // Regenerate html for word to guess.
         $(".word-to-guess").html(hangman.generateHTML(this.wordToGuess, letterClassName, true));
-        console.log(this.wordToGuess);
         
         // Reset key functionality.
         this.guessesLeft = 10;
@@ -53,7 +53,6 @@ var hangman = {
     },
 
     checkLetter: function(letter){
-
         var word = this.wordToGuess.toUpperCase();        
         var letter = letter.toUpperCase();
 
@@ -74,7 +73,6 @@ var hangman = {
         }
 
         this.evaluateStateOfGame();
-        console.log("Wins: " + this.wins + " | Losses: " + this.losses);
     },
 
     showFoundLetter: function(letter) {
@@ -92,13 +90,36 @@ var hangman = {
     },
 
     evaluateStateOfGame: function() {
+        // Evaluate whether the player won, loss or the game is still being played.
+        var gameResults = $("<div>").addClass("game-results");
         if (!$(".letter").text().includes('_')){
             this.wins++;
-            this.startGame();            
+            this.gameStopped = true;
+            this.addWordToListOfWordsPlayed();
+            gameResults.html("<h3>You Won! <i class='fas fa-laugh-beam'</i></h3>");
+            gameResults.append($("<p>").text("Press any key to play again"));
         }
         else if (this.guessesLeft === 0){
             this.losses++;
-            this.startGame();
+            this.gameStopped = true;
+            this.addWordToListOfWordsPlayed();
+            gameResults.html("<h3>You Loss! <i class='fas fa-sad-tear'</i></h3>");
+            gameResults.append($("<p>").html("The word was: <b>" + hangman.wordToGuess.toUpperCase() + "</b>"));
+            gameResults.append($("<p>").text("Press any key to play again"));
         }
+        else{
+            gameResults = "";
+        }
+
+        // Set game results column.
+        $(".results-col").html(gameResults);
+
+        // Update Score and words played
+        $("#total-wins").text(hangman.wins);
+        $("#total-losses").text(hangman.losses);
+    },
+
+    addWordToListOfWordsPlayed: function(){
+        $(".words-played-list").append($("<p>").text(this.wordToGuess)).append($("<span>").addClass(spaceClassName));
     }
 }
