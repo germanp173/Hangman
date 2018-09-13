@@ -91,25 +91,30 @@ var hangman = {
 
     evaluateStateOfGame: function() {
         // Evaluate whether the player won, loss or the game is still being played.
-        var gameResults = $("<div>").addClass("game-results");
         if (!$(".letter").text().includes('_')){
-            this.wins++;
-            this.gameStopped = true;
-            this.addWordToListOfWordsPlayed();
-            gameResults.html("<h3>You Won! <i class='fas fa-laugh-beam'</i></h3>");
-            gameResults.append($("<p>").text("Press any key to play again"));
+            this.wins++;            
+            this.updateUI(true);
         }
         else if (this.guessesLeft === 0){
             this.losses++;
-            this.gameStopped = true;
-            this.addWordToListOfWordsPlayed();
-            gameResults.html("<h3>You Loss! <i class='fas fa-sad-tear'</i></h3>");
-            gameResults.append($("<p>").html("The word was: <b>" + hangman.wordToGuess.toUpperCase() + "</b>"));
-            gameResults.append($("<p>").text("Press any key to play again"));
+            this.updateUI(false);
+        }
+    },
+    
+    updateUI: function(won){
+        this.gameStopped = true;
+        var gameResults = $("<div>").addClass("game-results");
+        
+        if (won){
+            gameResults.html("<h3>You Won! <i class='fas fa-laugh-beam'</i></h3>");
         }
         else{
-            gameResults = "";
+            gameResults.html("<h3>You Loss! <i class='fas fa-sad-tear'</i></h3>");
+            gameResults.append($("<p>").html("The character was: <b>" + hangman.wordToGuess.toUpperCase() + "</b>"));
         }
+
+        gameResults.append($("<p>").text("Press any key to play again"));
+        this.addWordToListOfWordsPlayed();
 
         // Set game results column.
         $(".results-col").html(gameResults);
@@ -117,9 +122,19 @@ var hangman = {
         // Update Score and words played
         $("#total-wins").text(hangman.wins);
         $("#total-losses").text(hangman.losses);
+
+        // Update background and sound.
+        document.body.style.backgroundImage = marvelObjects[this.wordToGuess].image;
     },
 
     addWordToListOfWordsPlayed: function(){
         $(".words-played-list").append($("<p>").text(this.wordToGuess)).append($("<span>").addClass(spaceClassName));
+    },
+
+    gameOver: function() {
+        var gameResults = $("<div>").addClass("game-results");
+        gameResults.html("<h3>No more words left! <i class='fas fa-flushed'</i></h3>");
+        gameResults.append($("<p>").text("Refresh the page to start over"));
+        $(".results-col").html(gameResults);
     }
 }
