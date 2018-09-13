@@ -4,6 +4,10 @@ document.onkeyup = function (event) {
 
     // Allow user to press any key to start the game.
     if (hangman.gameStopped) {
+        if (marvelWords.length == 0) {
+            hangman.gameOver();
+            return;
+        }
         hangman.startGame();
         hangman.gameStopped = false;
         resetResultsBox();
