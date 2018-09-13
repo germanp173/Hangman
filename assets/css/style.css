@@ -1,8 +1,15 @@
+@font-face {
+    font-family: 'marvel';
+    src: url(../fonts/AmericanPurpose.otf);
+    src: url(../fonts/AmericanPurpose.ttf);
+}
+
 body {
     background-image: url(../images/avengers-background.jpg);
     background-size: 100% auto;
     color: white;
     text-align: center;
+    font-family: marvel;
 }
 
 hr {
