@@ -2,6 +2,12 @@ hangman.startGame();
 
 document.onkeyup = function (event) {
 
+    // Ensure audio is playing (Can only be played after the user interacts with the site)
+    var audio = document.getElementById("audio-element");
+    if (audio.paused){
+        audio.play();
+    }
+
     // Allow user to press any key to start the game.
     if (hangman.gameStopped) {
         if (marvelWords.length == 0) {

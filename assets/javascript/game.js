@@ -13,7 +13,7 @@ var hangman = {
         this.moveWordToWordsPlayedBucket(this.wordToGuess);
 
         // Regenerate html for word to guess.
-        $(".word-to-guess").html(hangman.generateHTML(this.wordToGuess, letterClassName, true));
+        $(".word-to-guess").html(this.generateHTML(this.wordToGuess, letterClassName, true));
         
         // Reset key functionality.
         this.guessesLeft = 10;
@@ -110,7 +110,7 @@ var hangman = {
         }
         else{
             gameResults.html("<h3>You Loss! <i class='fas fa-sad-tear'</i></h3>");
-            gameResults.append($("<p>").html("The character was: <b>" + hangman.wordToGuess.toUpperCase() + "</b>"));
+            gameResults.append($("<p>").html("The character was: <b>" + this.wordToGuess.toUpperCase() + "</b>"));
         }
 
         gameResults.append($("<p>").text("Press any key to play again"));
@@ -120,11 +120,14 @@ var hangman = {
         $(".results-col").html(gameResults);
 
         // Update Score and words played
-        $("#total-wins").text(hangman.wins);
-        $("#total-losses").text(hangman.losses);
+        $("#total-wins").text(this.wins);
+        $("#total-losses").text(this.losses);
 
-        // Update background and sound.
+        // Update background image.
         document.body.style.backgroundImage = marvelObjects[this.wordToGuess].image;
+
+        // Update Sound
+        document.getElementById("audio-element").src = marvelObjects[this.wordToGuess].audio;
     },
 
     addWordToListOfWordsPlayed: function(){
